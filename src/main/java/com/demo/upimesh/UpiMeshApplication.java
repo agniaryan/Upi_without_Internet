@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Entry point for the offline UPI mesh demo.
- *
+ 
  * Run from terminal:
  *   ./mvnw spring-boot:run        (Linux/Mac)
  *   mvnw.cmd spring-boot:run      (Windows)
