@@ -3,7 +3,6 @@ package com.demo.upimesh.controller;
 import com.demo.upimesh.crypto.ServerKeyHolder;
 import com.demo.upimesh.model.*;
 import com.demo.upimesh.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +22,29 @@ import java.util.*;
 @RequestMapping("/api")
 public class ApiController {
 
-    @Autowired private ServerKeyHolder serverKey;
-    @Autowired private DemoService demo;
-    @Autowired private MeshSimulatorService mesh;
-    @Autowired private BridgeIngestionService bridge;
-    @Autowired private AccountRepository accountRepo;
-    @Autowired private TransactionRepository txRepo;
-    @Autowired private IdempotencyService idempotency;
+    private final ServerKeyHolder serverKey;
+    private final DemoService demo;
+    private final MeshSimulatorService mesh;
+    private final BridgeIngestionService bridge;
+    private final AccountRepository accountRepo;
+    private final TransactionRepository txRepo;
+    private final IdempotencyService idempotency;
+
+    public ApiController(ServerKeyHolder serverKey,
+                         DemoService demo,
+                         MeshSimulatorService mesh,
+                         BridgeIngestionService bridge,
+                         AccountRepository accountRepo,
+                         TransactionRepository txRepo,
+                         IdempotencyService idempotency) {
+        this.serverKey = serverKey;
+        this.demo = demo;
+        this.mesh = mesh;
+        this.bridge = bridge;
+        this.accountRepo = accountRepo;
+        this.txRepo = txRepo;
+        this.idempotency = idempotency;
+    }
 
     // ------------------------------------------------------------------ key
 

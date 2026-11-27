@@ -6,7 +6,6 @@ import com.demo.upimesh.model.PaymentInstruction;
 import com.demo.upimesh.model.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +28,20 @@ public class BridgeIngestionService {
 
     private static final Logger log = LoggerFactory.getLogger(BridgeIngestionService.class);
 
-    @Autowired private HybridCryptoService crypto;
-    @Autowired private IdempotencyService idempotency;
-    @Autowired private SettlementService settlement;
+    private final HybridCryptoService crypto;
+    private final IdempotencyService idempotency;
+    private final SettlementService settlement;
 
     @Value("${upi.mesh.packet-max-age-seconds:86400}")
     private long maxAgeSeconds;
+
+    public BridgeIngestionService(HybridCryptoService crypto,
+                                  IdempotencyService idempotency,
+                                  SettlementService settlement) {
+        this.crypto = crypto;
+        this.idempotency = idempotency;
+        this.settlement = settlement;
+    }
 
     public IngestResult ingest(MeshPacket packet, String bridgeNodeId, int hopCount) {
         try {

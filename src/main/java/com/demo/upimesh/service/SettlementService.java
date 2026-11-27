@@ -7,7 +7,6 @@ import com.demo.upimesh.model.Transaction;
 import com.demo.upimesh.model.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +28,13 @@ public class SettlementService {
 
     private static final Logger log = LoggerFactory.getLogger(SettlementService.class);
 
-    @Autowired private AccountRepository accounts;
-    @Autowired private TransactionRepository transactions;
+    private final AccountRepository accounts;
+    private final TransactionRepository transactions;
+
+    public SettlementService(AccountRepository accounts, TransactionRepository transactions) {
+        this.accounts = accounts;
+        this.transactions = transactions;
+    }
 
     @Transactional
     public Transaction settle(PaymentInstruction instruction, String packetHash,

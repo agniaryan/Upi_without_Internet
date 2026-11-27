@@ -2,7 +2,6 @@ package com.demo.upimesh.crypto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.demo.upimesh.model.PaymentInstruction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
@@ -49,8 +48,11 @@ public class HybridCryptoService {
     private final SecureRandom rng = new SecureRandom();
     private final ObjectMapper json = new ObjectMapper();
 
-    @Autowired
-    private ServerKeyHolder serverKey;
+    private final ServerKeyHolder serverKey;
+
+    public HybridCryptoService(ServerKeyHolder serverKey) {
+        this.serverKey = serverKey;
+    }
 
     /**
      * Encrypt a payment instruction with the server's public key.
